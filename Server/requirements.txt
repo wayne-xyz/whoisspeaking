@@ -7,3 +7,5 @@ jupyter
 coremltools
 turicreate
 pymongo
+fastapi
+uvicorn[standard]
