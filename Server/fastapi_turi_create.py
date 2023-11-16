@@ -1,28 +1,18 @@
-# Run this server: 
-# uvicorn fastapi_turi_create:app --port 8080
-
 import pickle
-from bson.binary import Binary
-import json
 import numpy as np
 import uvicorn
 from fastapi import FastAPI, Request
 from pymongo import MongoClient
-from tornado.escape import recursive_unicode
-from basehandler import CustomJSONEncoder
+from basehandler import json_str
 import turicreate as tc
 from sklearn.neighbors import KNeighborsClassifier
 from joblib import dump, load
-
-def json_str(value):
-    return str(json.dumps(recursive_unicode(value), cls=CustomJSONEncoder).replace("</", "<\\/"))
 
 def write_json(value={}):
     '''Completes header and writes JSONified 
         HTTP back to client
     '''
-    tmp = json_str(value)
-    return tmp
+    return json_str(value)
 
 def get_features_and_labels_as_SFrame(dsid):
     # create feature vectors from database
@@ -146,7 +136,6 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
             KNNclf = pickle.loads(tmp['model'])
         
         model = KNNclf
-
     else:
         # load the model from the database (using pickle)
         # we are blocking tornado!! no!!
