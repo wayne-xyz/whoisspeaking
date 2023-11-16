@@ -11,7 +11,3 @@ brew services start mongodb-community@6.0
 
 To stop the mongod server:
 brew services stop mongodb-community@6.0
-
-
-
-
