@@ -9,6 +9,8 @@
 //    - no record on server ,returen infor -directly to train who you are
 //
 //    - yes record return who is speaking
+// beacuse using a exsiting rep , no ability to creat branch in xcode .
+// add new branch commit
 
 import UIKit
 
