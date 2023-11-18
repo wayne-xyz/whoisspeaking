@@ -8,11 +8,7 @@ import turicreate as tc
 from sklearn.neighbors import KNeighborsClassifier
 from joblib import dump, load
 
-def write_json(value={}):
-    '''Completes header and writes JSONified 
-        HTTP back to client
-    '''
-    return json_str(value)
+app = FastAPI()
 
 def get_features_and_labels_as_SFrame(dsid):
     # create feature vectors from database
@@ -40,12 +36,6 @@ def get_features_as_SFrame(vals):
     # send back the SFrame of the data
     return tc.SFrame(data=data)
     
-supported_models = ["KNN", "SVM"]
-client = MongoClient(serverSelectionTimeoutMS=50)
-db = client.turidatabase
-KNNclf, SVMclf = None, None
-app = FastAPI()
-
 
 @app.post("/AddDataPoint")
 async def AddDataPoint(request: Request):
@@ -61,7 +51,7 @@ async def AddDataPoint(request: Request):
     dbid = db.labeledinstances.insert_one(
         {"feature":fvals,"label":label,"dsid":sess}
         )
-    return write_json({"id":str(dbid),
+    return json_str({"id":str(dbid),
         "feature":[str(len(fvals))+" Points Received",
                 "min of: " +str(min(fvals)),
                 "max of: " +str(max(fvals))],
@@ -108,7 +98,7 @@ async def UpdateModel(dsid: int = 0):
             
     # send back the resubstitution accuracy
     # if training takes a while, we are blocking tornado!! No!!
-    return write_json({"KNNAccuracy": KNNacc, "SVMAccuracy": SVMacc})
+    return json_str({"KNNAccuracy": KNNacc, "SVMAccuracy": SVMacc})
     
 
 @app.post("/PredictOne")
@@ -143,8 +133,12 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
         model = SVMclf
   
     predLabel = model.predict(fvals)
-    return write_json({"prediction":str(predLabel)})
+    return json_str({"prediction":str(predLabel)})
 
 
 if __name__ == "__main__":
+    supported_models = ["KNN", "SVM"]
+    client = MongoClient(serverSelectionTimeoutMS=50)
+    db = client.turidatabase
+    KNNclf, SVMclf = None, None
     uvicorn.run(app, host="0.0.0.0", port=8080)
