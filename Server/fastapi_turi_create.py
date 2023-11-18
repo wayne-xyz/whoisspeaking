@@ -69,48 +69,46 @@ async def AddDataPoint(request: Request):
 
 
 @app.get("/UpdateModel")
-async def UpdateModel(dsid: int = 0, model_name: str = "KNN"):
-    '''Train a new model (or update) for given dataset ID
+async def UpdateModel(dsid: int = 0):
+    '''Train two new models (or update) for given dataset ID
     '''
-    if model_name not in supported_models:
-        return "model not supported!"
-
-
     # fit the model to the data
-    acc = -1
-    if model_name == "KNN":
-        # create feature vectors and labels from database
-        features = []
-        labels   = []
-        for a in db.labeledinstances.find({"dsid":dsid}): 
-            features.append([float(val) for val in a['feature']])
-            labels.append(a['label'])
-        
-        model = KNeighborsClassifier(n_neighbors=1)
-        if labels:
-            global KNNclf
-            model.fit(features,labels) # training
-            lstar = model.predict(features)
-            KNNclf = model
-            acc = sum(lstar==labels)/float(len(labels))
+    ###### KNN
+    KNNacc = -1
+    # create feature vectors and labels from database
+    features = []
+    labels   = []
+    for a in db.labeledinstances.find({"dsid":dsid}): 
+        features.append([float(val) for val in a['feature']])
+        labels.append(a['label'])
+    
+    model = KNeighborsClassifier(n_neighbors=1)
+    if labels:
+        global KNNclf
+        model.fit(features,labels) # training
+        lstar = model.predict(features)
+        KNNclf = model
+        KNNacc = sum(lstar==labels)/float(len(labels))
 
-            # just write this to model files directory
-            dump(model, '../models/sklearn_model_dsid%d.joblib'%(dsid))
-    else:
-        data = get_features_and_labels_as_SFrame(dsid)
-        # fit the model to the data
-        if len(data)>0:
-            global SVMclf
-            model = tc.classifier.svm_classifier.create(data,target='target',verbose=0)# training
-            yhat = model.predict(data)
-            SVMclf = model
-            acc = sum(yhat==data['target'])/float(len(data))
-            # save model for use later, if desired
-            model.save('../models/turi_model_dsid%d'%(dsid))
+        # just write this to model files directory
+        dump(model, '../models/sklearn_model_dsid%d.joblib'%(dsid))
+        
+    ####### SVM 
+    SVMacc = -1
+    data = get_features_and_labels_as_SFrame(dsid)
+    # fit the model to the data
+    if len(data)>0:
+        global SVMclf
+        model = tc.classifier.svm_classifier.create(data,target='target',verbose=0)# training
+        yhat = model.predict(data)
+        SVMclf = model
+        SVMacc = sum(yhat==data['target'])/float(len(data))
+        # save model for use later, if desired
+        model.save('../models/turi_model_dsid%d'%(dsid))
             
     # send back the resubstitution accuracy
     # if training takes a while, we are blocking tornado!! No!!
-    return write_json({"resubAccuracy":acc})
+    return write_json({"KNNAccuracy": KNNacc, "Accuracy": SVMacc})
     
 
 @app.post("/PredictOne")

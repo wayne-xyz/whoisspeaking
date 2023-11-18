@@ -112,7 +112,7 @@ class PredictOneFromDatasetIdTuri(BaseHandler):
             self.clf = tc.load_model('../models/turi_model_dsid%d'%(dsid))
   
 
-        predLabel = self.clf.predict(fvals);
+        predLabel = self.clf.predict(fvals)
         self.write_json({"prediction":str(predLabel)})
 
     def get_features_as_SFrame(self, vals):
@@ -142,8 +142,8 @@ class UpdateModelForDatasetIdSklearn(BaseHandler):
             labels.append(a['label'])
 
         # fit the model to the data
-        model = KNeighborsClassifier(n_neighbors=1);
-        acc = -1;
+        model = KNeighborsClassifier(n_neighbors=1)
+        acc = -1
         if labels:
             model.fit(features,labels) # training
             lstar = model.predict(features)
@@ -168,7 +168,7 @@ class PredictOneFromDatasetIdSklearn(BaseHandler):
         data = json.loads(self.request.body.decode("utf-8"))    
 
         vals = data['feature'];
-        fvals = [float(val) for val in vals];
+        fvals = [float(val) for val in vals]
         fvals = np.array(fvals).reshape(1, -1)
         dsid  = data['dsid']
 
@@ -179,7 +179,7 @@ class PredictOneFromDatasetIdSklearn(BaseHandler):
             tmp = load('../models/sklearn_model_dsid%d.joblib'%(dsid)) 
             self.clf = pickle.loads(tmp['model'])
 
-        predLabel = self.clf.predict(fvals);
+        predLabel = self.clf.predict(fvals)
         self.write_json({"prediction":str(predLabel)})
 
 
