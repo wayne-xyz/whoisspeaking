@@ -108,7 +108,7 @@ async def UpdateModel(dsid: int = 0):
             
     # send back the resubstitution accuracy
     # if training takes a while, we are blocking tornado!! No!!
-    return write_json({"KNNAccuracy": KNNacc, "Accuracy": SVMacc})
+    return write_json({"KNNAccuracy": KNNacc, "SVMAccuracy": SVMacc})
     
 
 @app.post("/PredictOne")
