@@ -64,6 +64,9 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
+    
     // a animation show the listenning status
     func startAnimation(){
         
