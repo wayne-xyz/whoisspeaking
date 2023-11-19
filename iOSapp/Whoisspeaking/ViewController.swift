@@ -43,6 +43,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        testAudioFeaturte()
     }
 
     
@@ -55,7 +56,7 @@ class ViewController: UIViewController {
     
     // start the recognition of the voice
     func startRecog(){
-        
+      
     }
     
     // add the voice to server
@@ -63,6 +64,11 @@ class ViewController: UIViewController {
         
     }
     
+    // this is functional test func
+    func testAudioFeaturte(){
+        let audioFeatureExInstanc=AudioFeatureExtractor()
+        audioFeatureExInstanc.start()
+    }
     
     
     

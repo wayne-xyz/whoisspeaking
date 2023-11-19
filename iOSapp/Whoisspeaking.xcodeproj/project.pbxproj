@@ -11,6 +11,8 @@
 		CC8C58EB2B09E72600BF1469 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EA2B09E72600BF1469 /* AudioKit */; };
 		CC8C58ED2B09F00500BF1469 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EC2B09F00500BF1469 /* AudioKit */; };
 		CC8C58F02B0A5EB700BF1469 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EF2B0A5EB700BF1469 /* SoundpipeAudioKit */; };
+		CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */; };
+		CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F32B0ABC1100BF1469 /* Buffer.swift */; };
 		CCD23F032B094A0000B97012 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F022B094A0000B97012 /* AppDelegate.swift */; };
 		CCD23F052B094A0000B97012 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F042B094A0000B97012 /* SceneDelegate.swift */; };
 		CCD23F072B094A0000B97012 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F062B094A0000B97012 /* ViewController.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFeatureExtractor.swift; sourceTree = "<group>"; };
+		CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCCCalculator.swift; sourceTree = "<group>"; };
+		CC8C58F32B0ABC1100BF1469 /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		CCD23EFF2B094A0000B97012 /* Whoisspeaking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whoisspeaking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD23F022B094A0000B97012 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCD23F042B094A0000B97012 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,12 +73,14 @@
 				CCD23F022B094A0000B97012 /* AppDelegate.swift */,
 				CCD23F042B094A0000B97012 /* SceneDelegate.swift */,
 				CCD23F062B094A0000B97012 /* ViewController.swift */,
+				CC8C58F32B0ABC1100BF1469 /* Buffer.swift */,
 				CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */,
 				CCD23F162B09838100B97012 /* ConnectManager.swift */,
 				CCD23F082B094A0000B97012 /* Main.storyboard */,
 				CCD23F0B2B094A0400B97012 /* Assets.xcassets */,
 				CCD23F0D2B094A0400B97012 /* LaunchScreen.storyboard */,
 				CCD23F102B094A0400B97012 /* Info.plist */,
+				CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */,
 			);
 			path = Whoisspeaking;
 			sourceTree = "<group>";
@@ -160,6 +166,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCD23F172B09838100B97012 /* ConnectManager.swift in Sources */,
+				CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */,
+				CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */,
 				CCD23F072B094A0000B97012 /* ViewController.swift in Sources */,
 				CC79155D2B09E661001827D1 /* AudioFeatureExtractor.swift in Sources */,
 				CCD23F032B094A0000B97012 /* AppDelegate.swift in Sources */,
