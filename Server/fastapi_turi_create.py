@@ -123,7 +123,7 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
         predLabel = BTclf.predict(tc.SFrame(data={'sequence':np.array(fvals)}))
   
     
-    return json_str({"prediction":str(predLabel)})
+    return json_str({"prediction":str(predLabel[0])})
 
 
 if __name__ == "__main__":
