@@ -106,7 +106,7 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
             tmp = load('models/knn_model_dsid%d.joblib'%(dsid)) 
             KNNclf = tmp
         
-        model = KNNclf
+        predLabel = KNNclf.predict(fvals)
     else:
         # load the model from the database (using pickle)
         # we are blocking tornado!! no!!
@@ -114,9 +114,9 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
         if not BTclf:
             print('Loading Model From file')
             BTclf = tc.load_model('models/turi_model_dsid%d'%(dsid))
-        model = BTclf
+        predLabel = BTclf.predict(tc.SFrame(data={'sequence':np.array(fvals)}))
   
-    predLabel = model.predict(tc.SFrame(data={'sequence':np.array(fvals)}))
+    
     return json_str({"prediction":str(predLabel)})
 
 

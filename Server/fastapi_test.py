@@ -20,6 +20,6 @@ names = ["Joe", "Neo", "Sam"]
 feature = np.random.randn(150)
 data = {'feature': feature.tolist(), 'dsid': 0}
 data_str = json.dumps(data)
-response = requests.post(host + '/PredictOne?model_name=BT',data=data_str.encode())
+response = requests.post(host + '/PredictOne?model_name=KNN',data=data_str.encode())
 content = response.content.decode()
 print(content)
