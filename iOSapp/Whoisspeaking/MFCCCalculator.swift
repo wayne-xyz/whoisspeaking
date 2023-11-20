@@ -35,21 +35,21 @@ class MFCCCalculator {
         fft(windowedSignal, &fftResults)
         
         // Compute power spectrum
-        var powerSpectrum = [Float](repeating: 0.0, count: frameSize / 2)
+        _ = [Float](repeating: 0.0, count: frameSize / 2)
       //  vDSP_zvmags(&fftResults, 1, &powerSpectrum, 1, vDSP_Length(frameSize / 2))
         
         // Apply Mel filterbank
-        let melFilterbank = melFilterbankMatrix()
-        var melFilteredSpectrum = [Float](repeating: 0.0, count: numFilters)
+        _ = melFilterbankMatrix()
+        _ = [Float](repeating: 0.0, count: numFilters)
       //  vDSP_mmul(melFilterbank, 1, &powerSpectrum, 1, &melFilteredSpectrum, 1, vDSP_Length(numFilters), vDSP_Length(frameSize / 2))
         
         // Take the logarithm of the filterbank energies
-        var logMelEnergies = [Float](repeating: 0.0, count: numFilters)
+        _ = [Float](repeating: 0.0, count: numFilters)
     //    vDSP_vdbcon(melFilteredSpectrum, 1, 1, &logMelEnergies, 1, vDSP_Length(numFilters), 1)
         
         // Compute DCT
-        var mfccs = [Float](repeating: 0.0, count: numCoefficients)
-        let dctMatrix = dctMatrixFunction(size: numFilters, numCoefficients: numCoefficients)
+        let mfccs = [Float](repeating: 0.0, count: numCoefficients)
+        _ = dctMatrixFunction(size: numFilters, numCoefficients: numCoefficients)
     //    vDSP_mmul(dctMatrix, 1, &logMelEnergies, 1, &mfccs, 1, vDSP_Length(numCoefficients), 1, vDSP_Length(numFilters))
         
         return mfccs
@@ -68,8 +68,8 @@ class MFCCCalculator {
     }
     
     private func fft(_ input: [Float], _ output: inout [Float]) {
-        var realPart = [Float](input)
-        var imaginaryPart = [Float](repeating: 0.0, count: input.count)
+        _ = [Float](input)
+        _ = [Float](repeating: 0.0, count: input.count)
    //     var splitComplex = DSPSplitComplex(realp: &realPart, imagp: &imaginaryPart)
         let fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(input.count))), FFTRadix(kFFTRadix2))
    //     vDSP_fft_zrip(fftSetup!, &splitComplex, 1, vDSP_Length(log2(Float(input.count))), FFTDirection(FFT_FORWARD))

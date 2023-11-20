@@ -14,8 +14,8 @@ import UIKit
 
 protocol AudioFeatureExtractorDelegate {
     
-    func audioFeatureExtract(trackedSamples: [Float], samplesBufferSize: Int, trackedFrequency:Double, trackedAmplitude:Double)
-    
+  //  func audioFeatureExtract(trackedSamples: [Float], samplesBufferSize: Int, trackedFrequency:Double, trackedAmplitude:Double)
+    func audioFeatureExtract(pitch:Double,amp:Double)
 }
 
 class AudioFeatureExtractor {
@@ -46,8 +46,7 @@ class AudioFeatureExtractor {
     }
     
     func pichHandle(pitch:AUValue ,amp:AUValue){
-        print("pitch\(pitch)")
-        print("amp\(amp)")
+        delegate!.audioFeatureExtract(pitch: Double(pitch), amp: Double(amp))
     }
     
     func start() {
@@ -66,20 +65,20 @@ class AudioFeatureExtractor {
     }
 
     
-    func signalTracker(didReceivedBuffer buffer: AVAudioPCMBuffer, atTime time: AVAudioTime){
-            
-            let elements = UnsafeBufferPointer(start: buffer.floatChannelData?[0], count:self.BUFFER_SIZE)
-            
-            self.trackedSamples.removeAll()
-            
-            for i in 0..<self.BUFFER_SIZE {
-                self.trackedSamples.append(elements[i])
-            }
-            
-        self.trackedAmplitude = Double(tracker.amplitude)
-        self.trackedFrequency = Double(tracker.leftPitch)
-
-        delegate!.audioFeatureExtract(trackedSamples: self.trackedSamples, samplesBufferSize: self.BUFFER_SIZE, trackedFrequency:self.trackedFrequency, trackedAmplitude:self.trackedAmplitude)
-            
-    }
+//    func signalTracker(didReceivedBuffer buffer: AVAudioPCMBuffer, atTime time: AVAudioTime){
+//            
+//            let elements = UnsafeBufferPointer(start: buffer.floatChannelData?[0], count:self.BUFFER_SIZE)
+//            
+//            self.trackedSamples.removeAll()
+//            
+//            for i in 0..<self.BUFFER_SIZE {
+//                self.trackedSamples.append(elements[i])
+//            }
+//            
+//        self.trackedAmplitude = Double(tracker.amplitude)
+//        self.trackedFrequency = Double(tracker.leftPitch)
+//
+//        delegate!.audioFeatureExtract(trackedSamples: self.trackedSamples, samplesBufferSize: self.BUFFER_SIZE, trackedFrequency:self.trackedFrequency, trackedAmplitude:self.trackedAmplitude)
+//            
+//    }
 }

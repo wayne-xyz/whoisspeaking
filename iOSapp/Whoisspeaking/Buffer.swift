@@ -5,6 +5,7 @@
 //  Created by RongWei Ji on 11/19/23.
 //
 // buffer class for the data to send the server
+// recently for two feature into one buffer array
 
 import Foundation
 let BUFFER_SIZE=50
@@ -17,16 +18,16 @@ class Buffer{
                     head = 0
                 }
             }
-        }
+    }
         
     func addNewData(fData:Double,aData:Double){
             f[head] = fData
             a[head] = aData
             head += 1
-        }
+    }
         
     func getDataAsVector()->[Double]{
-        var allVals = [Double](repeating:0, count:3*BUFFER_SIZE)
+        var allVals = [Double](repeating:0, count:2*BUFFER_SIZE)
             
         for i in 0..<BUFFER_SIZE {
             let idx = (head+i)%BUFFER_SIZE
