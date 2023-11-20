@@ -27,7 +27,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     // several string const
     let RECOGNIZING_B_LABLE="Recognizing Say Something"
     let RECOGNIZE_B_DEFAULT="Start Recognize"
-    let ADDRECOG_B_LABLE="Say Something"
+    let ADDRECOG_B_LABLE="Stop Adding"
     let ADDRECOG_B_DEFAULT="ADD Recognize"
     
     let POST_PREDICTKNN="/PredictOne?model_name=KNN"
@@ -50,6 +50,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     var addName:String="Default"
     var predictionURLDefault="/PredictOne?model_name=KNN"
     var dsid=0
+    var predictionResult=""
     
     @IBOutlet weak var modelLabel: UILabel!
     
@@ -90,7 +91,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         if(isListening){
             if(pitch>60){// filter the background
                 self.buffer.addNewData(fData: pitch, aData: amp)// add the data
-                print("addingdata\(buffer)")
+                print("Listening\(buffer)")
             }
             // comm the server
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
@@ -123,16 +124,26 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
            DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
                self.isWaitingForData = true
            })
-       }
+    }
     
- 
+    
+    var timer:Timer?
     // button action start the recognition of the voice
     func startRecog(){
         if(!isListening ){
             isListening=true
             isRecognizing=true
             startRecoButton.setTitle(RECOGNIZING_B_LABLE, for: .normal)
+            // Create a timer that repeats every 3 seconds
+            timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+                self.updatePredictionResultLabel()
+            }
         }else{
+            if timer != nil{
+                timer?.invalidate()
+                timer=nil
+            }
+            
             isListening=false
             isRecognizing=false
             startRecoButton.setTitle(RECOGNIZE_B_DEFAULT, for: .normal)
@@ -207,14 +218,13 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
                 // Handle the success case, e.g., parse the response data
                 print("Request successful. Response data: \(data)")
                 let jsonDictionary = self.convertDataToDictionary(with: data)
-                                
-                // I send the error message from the server to deal with the situation that i have no module ready
                 if let labelResponse = jsonDictionary["prediction"] {
-                print("prediction:\(labelResponse)")
+                    print("prediction:\(labelResponse)")
+                    self.predictionResult=labelResponse as! String
                 }else if let errorInfor = jsonDictionary["error"]{
-                print(errorInfor)
+                    print(errorInfor)
                 }else{
-                print("Something Error We are dealing with")
+                    print("Something Error We are dealing with")
                 }
                 
             case .failure(let error):
@@ -223,8 +233,12 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
             }
             
         })
-        
-        
+    }
+    
+    
+    // update the prediction label
+    func updatePredictionResultLabel(){
+        resultLabel.text="You are :\(self.predictionResult)"
     }
     
     
@@ -260,9 +274,16 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
                return jsonDictionary
                
            } catch {
-               
+               print("json error: \(error.localizedDescription)")
                if let strData = String(data:data!, encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue)){
                                print("printing JSON received as string: "+strData)
+                   if strData.contains("\\"){
+                       let correctedStrData = strData.replacingOccurrences(of: "\\", with: "")
+                       if let correctedData = correctedStrData.data(using: .utf8) {
+                          return convertDataToDictionary(with: correctedData)
+                       }
+                   }
+                 
                }else{
                    print("json error: \(error.localizedDescription)")
                }
@@ -281,7 +302,10 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     }
     
     
-   
+    @IBAction func updateModelAction(_ sender: Any) {
+        getUpdateModel()
+    }
+    
     
     
     // a animation show the listenning status
