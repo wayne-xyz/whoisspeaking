@@ -13,13 +13,13 @@ names = ["Joe", "Neo", "Sam"]
 #     content = response.content.decode()
 #     print(content)
                              
-response = requests.get(host + '/UpdateModel?dsid=0')
-content = response.content.decode()
-print(content)
-
-# feature = np.random.randn(150)
-# data = {'feature': feature.tolist(), 'dsid': 0}
-# data_str = json.dumps(data)
-# response = requests.post(host + '/PredictOne?model_name=KNN',data=data_str.encode())
+# response = requests.get(host + '/UpdateModel?dsid=0')
 # content = response.content.decode()
 # print(content)
+
+feature = np.random.randn(150)
+data = {'feature': feature.tolist(), 'dsid': 0}
+data_str = json.dumps(data)
+response = requests.post(host + '/PredictOne?model_name=BT',data=data_str.encode())
+content = response.content.decode()
+print(content)

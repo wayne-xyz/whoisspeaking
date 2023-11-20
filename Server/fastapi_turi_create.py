@@ -116,7 +116,7 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
             BTclf = tc.load_model('models/turi_model_dsid%d'%(dsid))
         model = BTclf
   
-    predLabel = model.predict(fvals)
+    predLabel = model.predict(tc.SFrame(data={'sequence':np.array(fvals)}))
     return json_str({"prediction":str(predLabel)})
 
 
