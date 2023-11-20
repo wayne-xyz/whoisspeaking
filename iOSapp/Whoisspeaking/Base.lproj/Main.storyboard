@@ -57,7 +57,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtj-Ut-jwi">
-                                <rect key="frame" x="16" y="323" width="361" height="240"/>
+                                <rect key="frame" x="16" y="323" width="361" height="312"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Default" borderStyle="roundedRect" placeholder="Your name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zqg-kg-9Ha">
                                         <rect key="frame" x="8" y="37" width="343" height="34"/>
@@ -90,6 +90,11 @@
                                             <action selector="modelSwitchAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="3H7-Ro-cNq"/>
                                         </connections>
                                     </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fRX-oB-iGG">
+                                        <rect key="frame" x="114.66666666666667" y="186" width="131.66666666666663" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Update Model"/>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Wae-Fl-E6b" secondAttribute="trailing" constant="20" symbolic="YES" id="1re-fb-a0l"/>
@@ -100,6 +105,7 @@
                                     <constraint firstItem="Wae-Fl-E6b" firstAttribute="leading" secondItem="gtj-Ut-jwi" secondAttribute="leading" constant="8" id="GQw-PZ-5XZ"/>
                                     <constraint firstItem="Zqg-kg-9Ha" firstAttribute="top" secondItem="tm7-7d-DkJ" secondAttribute="bottom" constant="8" symbolic="YES" id="THQ-Vs-s8q"/>
                                     <constraint firstItem="Wae-Fl-E6b" firstAttribute="top" secondItem="wU4-kz-2ge" secondAttribute="bottom" constant="8" symbolic="YES" id="UzO-bi-vSg"/>
+                                    <constraint firstItem="fRX-oB-iGG" firstAttribute="top" secondItem="wU4-kz-2ge" secondAttribute="bottom" constant="72" id="Yne-xT-R9g"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tm7-7d-DkJ" secondAttribute="trailing" constant="20" symbolic="YES" id="cIh-VR-frk"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zqg-kg-9Ha" secondAttribute="trailing" constant="10" id="jo2-tr-iBd"/>
                                     <constraint firstItem="Zqg-kg-9Ha" firstAttribute="leading" secondItem="gtj-Ut-jwi" secondAttribute="leading" constant="8" id="nYn-vg-ye7"/>
@@ -107,6 +113,7 @@
                                     <constraint firstItem="tm7-7d-DkJ" firstAttribute="top" secondItem="gtj-Ut-jwi" secondAttribute="top" constant="8" id="pf6-3l-rrB"/>
                                     <constraint firstItem="ihA-my-xIG" firstAttribute="leading" secondItem="gtj-Ut-jwi" secondAttribute="leading" constant="8" id="uH0-np-8Qq"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wU4-kz-2ge" secondAttribute="trailing" constant="10" id="uZZ-5Q-Eky"/>
+                                    <constraint firstItem="fRX-oB-iGG" firstAttribute="centerX" secondItem="gtj-Ut-jwi" secondAttribute="centerX" id="uz3-gX-a8a"/>
                                     <constraint firstItem="wU4-kz-2ge" firstAttribute="top" secondItem="Zqg-kg-9Ha" secondAttribute="bottom" constant="8" symbolic="YES" id="zwY-0y-GbS"/>
                                 </constraints>
                             </view>
@@ -120,7 +127,7 @@
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="leading" secondItem="0JT-KO-89n" secondAttribute="trailing" constant="32" id="MeN-gn-UKb"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="top" secondItem="0JT-KO-89n" secondAttribute="bottom" constant="8" symbolic="YES" id="P4M-zO-mhu"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="width" secondItem="0JT-KO-89n" secondAttribute="width" id="XtF-BR-bfd"/>
-                            <constraint firstItem="gtj-Ut-jwi" firstAttribute="height" secondItem="0JT-KO-89n" secondAttribute="height" id="YA3-9b-OOL"/>
+                            <constraint firstItem="gtj-Ut-jwi" firstAttribute="height" secondItem="0JT-KO-89n" secondAttribute="height" multiplier="1.3" id="YA3-9b-OOL"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="akN-eP-mk1"/>
                             <constraint firstItem="0JT-KO-89n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="wuY-Y1-6xo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0JT-KO-89n" secondAttribute="trailing" constant="16" id="xa6-Iq-2Pa"/>

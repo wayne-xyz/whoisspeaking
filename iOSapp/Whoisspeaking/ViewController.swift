@@ -12,7 +12,7 @@
 // beacuse using a exsiting rep , no ability to creat branch in xcode .
 // add new branch commit
 // startreco - yes start
-
+// ui logic : after detect the first voice, for 20 seconds , start dectet second voice
 import UIKit
 
 
@@ -49,6 +49,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     var isWaitingForData=false //delay purpose
     var addName:String="Default"
     var predictionURLDefault="/PredictOne?model_name=KNN"
+    var dsid=0
     
     @IBOutlet weak var modelLabel: UILabel!
     
@@ -138,7 +139,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         }
     }
     
-    //button action add the voice to server
+    //button action add the voice to server , no update after add
     func addRecog(){
         if nameText.text != nil{
             if(!isListening){
@@ -151,7 +152,6 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
                 isListening=false
                 isRecognizing=false
                 addRecoButton.setTitle(ADDRECOG_B_DEFAULT, for: .normal)
-                getUpdateModel()// anounce the server to do the train
             }
         }else{
              messageInfor(_message: "Type your name")
@@ -181,7 +181,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     // upload the feature
     func sendFeatures(array:[Double],label:String){
         let connectM=ConnectManager.shared
-        let jasonUpload:NSDictionary=["feature":array,"label":label,"dsid":1]
+        let jasonUpload:NSDictionary=["feature":array,"label":label,"dsid":dsid]
         let requestData:Data?=self.convertDictionaryToData(with: jasonUpload)
         connectM.sendPostRequest(endpoint: "/AddDataPoint", jsonData: requestData!, completion: {result in
             switch result {
@@ -199,7 +199,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     // train done and get the result
     func getPrediction(array:[Double]){
         let connectM=ConnectManager.shared
-        let jasonUpload:NSDictionary=["feature":array,"dsid":1]
+        let jasonUpload:NSDictionary=["feature":array,"dsid":dsid]
         let requestData:Data?=self.convertDictionaryToData(with: jasonUpload)
         connectM.sendPostRequest(endpoint: "/PredictOne", jsonData: requestData!, completion: {result in
             switch result {
