@@ -64,21 +64,4 @@ class AudioFeatureExtractor {
         mic.stop()
     }
 
-    
-//    func signalTracker(didReceivedBuffer buffer: AVAudioPCMBuffer, atTime time: AVAudioTime){
-//            
-//            let elements = UnsafeBufferPointer(start: buffer.floatChannelData?[0], count:self.BUFFER_SIZE)
-//            
-//            self.trackedSamples.removeAll()
-//            
-//            for i in 0..<self.BUFFER_SIZE {
-//                self.trackedSamples.append(elements[i])
-//            }
-//            
-//        self.trackedAmplitude = Double(tracker.amplitude)
-//        self.trackedFrequency = Double(tracker.leftPitch)
-//
-//        delegate!.audioFeatureExtract(trackedSamples: self.trackedSamples, samplesBufferSize: self.BUFFER_SIZE, trackedFrequency:self.trackedFrequency, trackedAmplitude:self.trackedAmplitude)
-//            
-//    }
 }

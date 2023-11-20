@@ -39,6 +39,8 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     @IBOutlet weak var nameText: UITextField!
     
+    @IBOutlet weak var animatiedCircle: AnimatedCircleView!
+    
     let voiceOperationQueue=OperationQueue()
     var buffer=Buffer()
     var isWaitingForData=false
@@ -124,6 +126,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     func addRecog(){
         if nameText.text != nil{
             if(!isListening){
+                
                 isListening=true
                 isRecognizing=false
                 addRecoButton.setTitle(ADDRECOG_B_LABLE, for: .normal)
@@ -267,10 +270,10 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     // a animation show the listenning status
     func startAnimation(){
-        
+        animatiedCircle.startAnimation()
     }
     func stopAnimation(){
-        
+        animatiedCircle.stopAnimation()
     }
 }
 
