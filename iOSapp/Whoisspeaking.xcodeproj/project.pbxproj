@@ -13,6 +13,7 @@
 		CC8C58F02B0A5EB700BF1469 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EF2B0A5EB700BF1469 /* SoundpipeAudioKit */; };
 		CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */; };
 		CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F32B0ABC1100BF1469 /* Buffer.swift */; };
+		CC8C58F62B0B2A1B00BF1469 /* AnimatedCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F52B0B2A1B00BF1469 /* AnimatedCircleView.swift */; };
 		CCD23F032B094A0000B97012 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F022B094A0000B97012 /* AppDelegate.swift */; };
 		CCD23F052B094A0000B97012 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F042B094A0000B97012 /* SceneDelegate.swift */; };
 		CCD23F072B094A0000B97012 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F062B094A0000B97012 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFeatureExtractor.swift; sourceTree = "<group>"; };
 		CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCCCalculator.swift; sourceTree = "<group>"; };
 		CC8C58F32B0ABC1100BF1469 /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
+		CC8C58F52B0B2A1B00BF1469 /* AnimatedCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircleView.swift; sourceTree = "<group>"; };
 		CCD23EFF2B094A0000B97012 /* Whoisspeaking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whoisspeaking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD23F022B094A0000B97012 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCD23F042B094A0000B97012 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				CCD23F022B094A0000B97012 /* AppDelegate.swift */,
 				CCD23F042B094A0000B97012 /* SceneDelegate.swift */,
 				CCD23F062B094A0000B97012 /* ViewController.swift */,
+				CC8C58F52B0B2A1B00BF1469 /* AnimatedCircleView.swift */,
 				CC8C58F32B0ABC1100BF1469 /* Buffer.swift */,
 				CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */,
 				CCD23F162B09838100B97012 /* ConnectManager.swift */,
@@ -166,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCD23F172B09838100B97012 /* ConnectManager.swift in Sources */,
+				CC8C58F62B0B2A1B00BF1469 /* AnimatedCircleView.swift in Sources */,
 				CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */,
 				CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */,
 				CCD23F072B094A0000B97012 /* ViewController.swift in Sources */,

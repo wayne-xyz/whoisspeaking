@@ -29,4 +29,6 @@ pip3 install coremltools
 pip3 install turicreate
 pip3 install pymongo
 
+pip3 install fastapi
+pip3 install uvicorn
 

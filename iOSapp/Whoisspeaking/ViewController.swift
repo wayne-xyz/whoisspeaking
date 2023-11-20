@@ -23,6 +23,8 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
        
         voiceDataHandle(pitch: pitch, amp: amp)
     }
+    
+    // several string const
     let RECOGNIZING_B_LABLE="Recognizing Say Something"
     let RECOGNIZE_B_DEFAULT="Start Recognize"
     let ADDRECOG_B_LABLE="Say Something"
@@ -30,7 +32,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     let POST_PREDICTKNN="/PredictOne?model_name=KNN"
     let POST_PREDICTBT="/PredictOne?model_name=BT"
-    
+    // ui
     @IBOutlet weak var startRecoButton: UIButton!
     
     @IBOutlet weak var resultLabel: UILabel!
@@ -39,11 +41,26 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     @IBOutlet weak var nameText: UITextField!
     
-    let voiceOperationQueue=OperationQueue()
-    var buffer=Buffer()
-    var isWaitingForData=false
-    var addName:String="Default"
+    @IBOutlet weak var animatiedCircle: AnimatedCircleView!
     
+    //propeties
+    let voiceOperationQueue=OperationQueue() // operationqueue
+    var buffer=Buffer() //save the data
+    var isWaitingForData=false //delay purpose
+    var addName:String="Default"
+    var predictionURLDefault="/PredictOne?model_name=KNN"
+    
+    @IBOutlet weak var modelLabel: UILabel!
+    
+    @IBAction func modelSwitchAction(_ sender: UISwitch) {
+        if sender.isOn{
+            predictionURLDefault=POST_PREDICTKNN
+            modelLabel.text="Model:KNN"
+        }else{
+            predictionURLDefault=POST_PREDICTBT
+            modelLabel.text="Model:BT"
+        }
+    }
     
     // set the flag to start the animation of the listenning action
     var isListening=false{
@@ -55,6 +72,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
             }
         }
     }
+    // status
     var isRecognizing=false
     
     override func viewDidLoad() {
@@ -124,6 +142,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     func addRecog(){
         if nameText.text != nil{
             if(!isListening){
+                
                 isListening=true
                 isRecognizing=false
                 addRecoButton.setTitle(ADDRECOG_B_LABLE, for: .normal)
@@ -252,7 +271,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
        }
     
     
-    
+    // function of button
     @IBAction func startRecoAction(_ sender: Any) {
         startRecog()
     }
@@ -267,10 +286,10 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     // a animation show the listenning status
     func startAnimation(){
-        
+        animatiedCircle.startAnimation()
     }
     func stopAnimation(){
-        
+        animatiedCircle.stopAnimation()
     }
 }
 
