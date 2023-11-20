@@ -3,7 +3,7 @@
 //  Whoisspeaking
 //
 //  Created by RongWei Ji on 11/19/23.
-//
+// animation of the custom uiview
 
 import Foundation
 import UIKit

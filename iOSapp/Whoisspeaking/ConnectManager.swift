@@ -28,7 +28,7 @@ class ConnectManager:NSObject, URLSessionDelegate{
     private let baseURL:String
     
     private override init(){
-        baseURL=SERVER_URL_FAST;
+        baseURL=SERVER_URL_FAST;  // todo to change the url
     }
     
     func sendGetRequest(endpoint: String, completion: @escaping (Result<Data, Error>) -> Void) {

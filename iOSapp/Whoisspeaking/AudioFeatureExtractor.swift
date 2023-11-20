@@ -4,7 +4,7 @@
 //
 //  Created by RongWei Ji on 11/19/23.
 //
-
+//using audiokit to get the pitch
 import Foundation
 import AudioKit
 import AVFoundation

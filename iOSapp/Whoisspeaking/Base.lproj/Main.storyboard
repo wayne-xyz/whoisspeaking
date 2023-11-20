@@ -57,7 +57,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtj-Ut-jwi">
-                                <rect key="frame" x="16" y="323" width="361" height="195"/>
+                                <rect key="frame" x="16" y="323" width="361" height="240"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Default" borderStyle="roundedRect" placeholder="Your name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zqg-kg-9Ha">
                                         <rect key="frame" x="8" y="37" width="343" height="34"/>
@@ -120,7 +120,7 @@
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="leading" secondItem="0JT-KO-89n" secondAttribute="trailing" constant="32" id="MeN-gn-UKb"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="top" secondItem="0JT-KO-89n" secondAttribute="bottom" constant="8" symbolic="YES" id="P4M-zO-mhu"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="width" secondItem="0JT-KO-89n" secondAttribute="width" id="XtF-BR-bfd"/>
-                            <constraint firstItem="gtj-Ut-jwi" firstAttribute="height" secondItem="0JT-KO-89n" secondAttribute="height" multiplier="0.812" id="YA3-9b-OOL"/>
+                            <constraint firstItem="gtj-Ut-jwi" firstAttribute="height" secondItem="0JT-KO-89n" secondAttribute="height" id="YA3-9b-OOL"/>
                             <constraint firstItem="gtj-Ut-jwi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="akN-eP-mk1"/>
                             <constraint firstItem="0JT-KO-89n" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="wuY-Y1-6xo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0JT-KO-89n" secondAttribute="trailing" constant="16" id="xa6-Iq-2Pa"/>

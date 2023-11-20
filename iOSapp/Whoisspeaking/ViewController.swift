@@ -23,6 +23,8 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
        
         voiceDataHandle(pitch: pitch, amp: amp)
     }
+    
+    // several string const
     let RECOGNIZING_B_LABLE="Recognizing Say Something"
     let RECOGNIZE_B_DEFAULT="Start Recognize"
     let ADDRECOG_B_LABLE="Say Something"
@@ -30,7 +32,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     let POST_PREDICTKNN="/PredictOne?model_name=KNN"
     let POST_PREDICTBT="/PredictOne?model_name=BT"
-    
+    // ui
     @IBOutlet weak var startRecoButton: UIButton!
     
     @IBOutlet weak var resultLabel: UILabel!
@@ -41,9 +43,10 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     @IBOutlet weak var animatiedCircle: AnimatedCircleView!
     
-    let voiceOperationQueue=OperationQueue()
-    var buffer=Buffer()
-    var isWaitingForData=false
+    //propeties
+    let voiceOperationQueue=OperationQueue() // operationqueue
+    var buffer=Buffer() //save the data
+    var isWaitingForData=false //delay purpose
     var addName:String="Default"
     var predictionURLDefault="/PredictOne?model_name=KNN"
     
@@ -69,6 +72,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
             }
         }
     }
+    // status
     var isRecognizing=false
     
     override func viewDidLoad() {
@@ -267,7 +271,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
        }
     
     
-    
+    // function of button
     @IBAction func startRecoAction(_ sender: Any) {
         startRecog()
     }
