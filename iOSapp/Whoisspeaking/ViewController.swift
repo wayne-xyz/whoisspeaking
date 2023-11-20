@@ -81,7 +81,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
                 }
             })
         }else{
-            print("unlistening no action")
+            
         }
     }
     
@@ -122,7 +122,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     //button action add the voice to server
     func addRecog(){
-        if let label=nameText.text{
+        if nameText.text != nil{
             if(!isListening){
                 isListening=true
                 isRecognizing=false
