@@ -1,4 +1,3 @@
-import pickle
 import numpy as np
 import uvicorn
 from fastapi import FastAPI, Request
@@ -6,37 +5,11 @@ from pymongo import MongoClient
 from basehandler import json_str
 import turicreate as tc
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
 from joblib import dump, load
 import os
 
 app = FastAPI()
-
-def get_features_and_labels_as_SFrame(dsid):
-    # create feature vectors from database
-    features=[]
-    labels=[]
-    for a in db.labeledinstances.find({"dsid":dsid}): 
-        features.append([float(val) for val in a['feature']])
-        labels.append(a['label'])
-
-    # convert to dictionary for tc
-    data = {'target':labels, 'sequence':np.array(features)}
-
-    # send back the SFrame of the data
-    return tc.SFrame(data=data)
-
-def get_features_as_SFrame(vals):
-    # create feature vectors from array input
-    # convert to dictionary of arrays for tc
-
-    tmp = [float(val) for val in vals]
-    tmp = np.array(tmp)
-    tmp = tmp.reshape((1,-1))
-    data = {'sequence':tmp}
-
-    # send back the SFrame of the data
-    return tc.SFrame(data=data)
-    
 
 @app.post("/AddDataPoint")
 async def AddDataPoint(request: Request):
@@ -63,9 +36,6 @@ async def AddDataPoint(request: Request):
 async def UpdateModel(dsid: int = 0):
     '''Train two new models (or update) for given dataset ID
     '''
-    # fit the model to the data
-    ###### KNN
-    KNNacc = -1
     # create feature vectors and labels from database
     features = []
     labels   = []
@@ -73,13 +43,19 @@ async def UpdateModel(dsid: int = 0):
         features.append([float(val) for val in a['feature']])
         labels.append(a['label'])
     
+    # split training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, train_size = 0.7)
+    
+    ###### KNN
+    KNNacc = -1
     model = KNeighborsClassifier(n_neighbors=1)
-    if labels:
+    if y_test:
         global KNNclf
-        model.fit(features,labels) # training
-        lstar = model.predict(features)
+        # fit the model to the data
+        model.fit(X_train,y_train) # training
+        lstar = model.predict(X_test)
         KNNclf = model
-        KNNacc = sum(lstar==labels)/float(len(labels))
+        KNNacc = sum(lstar==y_test)/float(len(y_test))
 
         # just write this to model files directory
         os.makedirs("models", exist_ok=True)
@@ -87,21 +63,20 @@ async def UpdateModel(dsid: int = 0):
         
     ####### BT 
     BTacc = -1
-    data = get_features_and_labels_as_SFrame(dsid)
-    # fit the model to the data
-    if len(data)>0:
+    data = {'target':y_train, 'sequence':np.array(X_train)}
+    data = tc.SFrame(data=data)
+    if y_test:
         global BTclf
-        model = tc.classifier.boosted_trees_classifier.create(data,target='target',verbose=0)# training
-        yhat = model.predict(data)
+        model = tc.classifier.boosted_trees_classifier.create(data, target='target',verbose=0)# training
+        yhat = model.predict(tc.SFrame(data={'sequence':np.array(X_test)}))
         BTclf = model
-        BTacc = sum(yhat==data['target'])/float(len(data))
+        BTacc = sum(yhat.to_numpy()==y_test)/float(len(y_test))
         # save model for use later, if desired
         os.makedirs("models", exist_ok=True)
         model.save('models/turi_model_dsid%d'%(dsid))
             
-    # send back the resubstitution accuracy
-    # if training takes a while, we are blocking tornado!! No!!
-    return json_str({"KNNAccuracy": KNNacc, "SVMAccuracy": BTacc})
+    # send back the accuracies
+    return json_str({"KNNAccuracy": KNNacc, "BTAccuracy": BTacc})
     
 
 @app.post("/PredictOne")
