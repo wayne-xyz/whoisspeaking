@@ -1,8 +1,8 @@
 import numpy as np
 import uvicorn
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from pymongo import MongoClient
-from basehandler import json_str
 import turicreate as tc
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -25,7 +25,7 @@ async def AddDataPoint(request: Request):
     dbid = db.labeledinstances.insert_one(
         {"feature":fvals,"label":label,"dsid":sess}
         )
-    return json_str({"id":str(dbid),
+    return JSONResponse({"id":str(dbid),
         "feature":[str(len(fvals))+" Points Received",
                 "min of: " +str(min(fvals)),
                 "max of: " +str(max(fvals))],
@@ -44,16 +44,16 @@ async def UpdateModel(dsid: int = 0):
         labels.append(a['label'])
     
     if not labels:
-        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": f"no data when dsid={dsid}"})
+        return JSONResponse({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": f"no data when dsid={dsid}"})
     
     if len(np.unique(labels)) < 2:
-        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "at least two classes"})
+        return JSONResponse({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "at least two classes"})
     
     # split training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, labels, train_size = 0.7)
     if not y_test:
         # not enough data
-        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "data insufficient"})
+        return JSONResponse({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "data insufficient"})
     
     
     ###### KNN
@@ -86,7 +86,7 @@ async def UpdateModel(dsid: int = 0):
     model.save('models/turi_model_dsid%d'%(dsid))
             
     # send back the accuracies
-    return json_str({"KNNAccuracy": KNNacc, "BTAccuracy": BTacc})
+    return JSONResponse({"KNNAccuracy": KNNacc, "BTAccuracy": BTacc})
     
 
 @app.post("/PredictOne")
@@ -123,7 +123,7 @@ async def PredictOne(request: Request, model_name: str = "KNN"):
         predLabel = BTclf.predict(tc.SFrame(data={'sequence':np.array(fvals)}))
   
     
-    return json_str({"prediction":str(predLabel[0])})
+    return JSONResponse({"prediction":str(predLabel[0])})
 
 
 if __name__ == "__main__":

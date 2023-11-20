@@ -1,6 +1,5 @@
 numpy==1.23.1  
 scikit-learn
-tornado
 turicreate
 pymongo
 fastapi
