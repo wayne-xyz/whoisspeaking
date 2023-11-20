@@ -17,6 +17,7 @@ import UIKit
 
 
 class ViewController: UIViewController,AudioFeatureExtractorDelegate {
+    // delegate function
     // fuction get the pitch and amp to send to server
     func audioFeatureExtract(pitch: Double, amp: Double) {
         print("pitch\(pitch);amp\(amp)")
@@ -38,6 +39,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     let voiceOperationQueue=OperationQueue()
     var buffer=Buffer()
     var isWaitingForData=false
+    
     
     // set the flag to start the animation of the listenning action
     var isListening=false{
@@ -80,20 +82,22 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         
         if isRecognizing{
             // send the voice data
-            getPrediction(_array: self.buffer.getDataAsVector())
+            getPrediction(array: self.buffer.getDataAsVector())
          
         }else{
             // send the voice with label
             // check the tesfield
             if let label=nameText.text{
-                sendFeatures(_array: self.buffer.getDataAsVector(), _label: label)
+                sendFeatures(array: self.buffer.getDataAsVector(), label: label)
                 setDelayedWaitingToTrue(2.0)
+            }else{
+                
             }
             
         }
     }
     
-    // for the time delay, have more data to send to server 
+    //set the time delay for more data.
     func setDelayedWaitingToTrue(_ time:Double){
            DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
                self.isWaitingForData = true
@@ -130,13 +134,55 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
      
     }
     
-    func sendFeatures(_array:[Double],_label:String){
+    // upload the feature
+    func sendFeatures(array:[Double],label:String){
+        let connectM=ConnectManager.shared
+        let jasonUpload:NSDictionary=["feature":array,"label":label,"dsid":1]
+        let requestData:Data?=self.convertDictionaryToData(with: jasonUpload)
+        connectM.sendPostRequest(endpoint: "/AddDataPoint", jsonData: requestData!, completion: {result in
+            switch result {
+            case .success(let data):
+                // Handle the success case, e.g., parse the response data
+                print("Request successful. Response data: \(data)")
+                
+            case .failure(let error):
+                // Handle the failure case, e.g., display an error message
+                print("Request failed. Error: \(error)")
+            }
+        })
+    }
+    
+    // train done and get the result
+    func getPrediction(array:[Double]){
+        let connectM=ConnectManager.shared
+        let jasonUpload:NSDictionary=["feature":array,"dsid":1]
+        let requestData:Data?=self.convertDictionaryToData(with: jasonUpload)
+        connectM.sendPostRequest(endpoint: "/PredictOne", jsonData: requestData!, completion: {result in
+            switch result {
+            case .success(let data):
+                // Handle the success case, e.g., parse the response data
+                print("Request successful. Response data: \(data)")
+                let jsonDictionary = self.convertDataToDictionary(with: data)
+                                
+                // I send the error message from the server to deal with the situation that i have no module ready
+                if let labelResponse = jsonDictionary["prediction"] {
+                print("prediction:\(labelResponse)")
+                }else if let errorInfor = jsonDictionary["error"]{
+                print(errorInfor)
+                }else{
+                print("Something Error We are dealing with")
+                }
+                
+            case .failure(let error):
+                // Handle the failure case, e.g., display an error message
+                print("Request failed. Error: \(error)")
+            }
+            
+        })
+        
         
     }
     
-    func getPrediction(_array:[Double]){
-        
-    }
     
     // this is functional test func
     func testAudioFeaturte(){
@@ -150,6 +196,37 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         print("Message:\(_message)")
     }
     
+    //MARK: JSON Conversion Functions
+       func convertDictionaryToData(with jsonUpload:NSDictionary) -> Data?{
+           do { // try to make JSON and deal with errors using do/catch block
+               let requestBody = try JSONSerialization.data(withJSONObject: jsonUpload, options:JSONSerialization.WritingOptions.prettyPrinted)
+               return requestBody
+           } catch {
+               print("json error: \(error.localizedDescription)")
+               return nil
+           }
+       }
+       
+       func convertDataToDictionary(with data:Data?)->NSDictionary{
+           do { // try to parse JSON and deal with errors using do/catch block
+               let jsonDictionary: NSDictionary =
+                   try JSONSerialization.jsonObject(with: data!,
+                                                 options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+               
+               return jsonDictionary
+               
+           } catch {
+               
+               if let strData = String(data:data!, encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue)){
+                               print("printing JSON received as string: "+strData)
+               }else{
+                   print("json error: \(error.localizedDescription)")
+               }
+               return NSDictionary() // just return empty
+           }
+       }
+    
+    
     
     @IBAction func startRecoAction(_ sender: Any) {
         startRecog()
@@ -161,8 +238,6 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     
     
    
-    
-    
     
     
     // a animation show the listenning status
