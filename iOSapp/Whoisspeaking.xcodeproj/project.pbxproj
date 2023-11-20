@@ -7,15 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC79155D2B09E661001827D1 /* AudioFeatureExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */; };
+		CC8C58EB2B09E72600BF1469 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EA2B09E72600BF1469 /* AudioKit */; };
+		CC8C58ED2B09F00500BF1469 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EC2B09F00500BF1469 /* AudioKit */; };
+		CC8C58F02B0A5EB700BF1469 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC8C58EF2B0A5EB700BF1469 /* SoundpipeAudioKit */; };
+		CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */; };
+		CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8C58F32B0ABC1100BF1469 /* Buffer.swift */; };
 		CCD23F032B094A0000B97012 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F022B094A0000B97012 /* AppDelegate.swift */; };
 		CCD23F052B094A0000B97012 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F042B094A0000B97012 /* SceneDelegate.swift */; };
 		CCD23F072B094A0000B97012 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F062B094A0000B97012 /* ViewController.swift */; };
 		CCD23F0A2B094A0000B97012 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCD23F082B094A0000B97012 /* Main.storyboard */; };
 		CCD23F0C2B094A0400B97012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCD23F0B2B094A0400B97012 /* Assets.xcassets */; };
 		CCD23F0F2B094A0400B97012 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCD23F0D2B094A0400B97012 /* LaunchScreen.storyboard */; };
+		CCD23F172B09838100B97012 /* ConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD23F162B09838100B97012 /* ConnectManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFeatureExtractor.swift; sourceTree = "<group>"; };
+		CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCCCalculator.swift; sourceTree = "<group>"; };
+		CC8C58F32B0ABC1100BF1469 /* Buffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		CCD23EFF2B094A0000B97012 /* Whoisspeaking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whoisspeaking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD23F022B094A0000B97012 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCD23F042B094A0000B97012 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +34,7 @@
 		CCD23F0B2B094A0400B97012 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCD23F0E2B094A0400B97012 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CCD23F102B094A0400B97012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCD23F162B09838100B97012 /* ConnectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC8C58ED2B09F00500BF1469 /* AudioKit in Frameworks */,
+				CC8C58EB2B09E72600BF1469 /* AudioKit in Frameworks */,
+				CC8C58F02B0A5EB700BF1469 /* SoundpipeAudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,10 +73,14 @@
 				CCD23F022B094A0000B97012 /* AppDelegate.swift */,
 				CCD23F042B094A0000B97012 /* SceneDelegate.swift */,
 				CCD23F062B094A0000B97012 /* ViewController.swift */,
+				CC8C58F32B0ABC1100BF1469 /* Buffer.swift */,
+				CC79155C2B09E661001827D1 /* AudioFeatureExtractor.swift */,
+				CCD23F162B09838100B97012 /* ConnectManager.swift */,
 				CCD23F082B094A0000B97012 /* Main.storyboard */,
 				CCD23F0B2B094A0400B97012 /* Assets.xcassets */,
 				CCD23F0D2B094A0400B97012 /* LaunchScreen.storyboard */,
 				CCD23F102B094A0400B97012 /* Info.plist */,
+				CC8C58F12B0AAFFA00BF1469 /* MFCCCalculator.swift */,
 			);
 			path = Whoisspeaking;
 			sourceTree = "<group>";
@@ -83,6 +101,11 @@
 			dependencies = (
 			);
 			name = Whoisspeaking;
+			packageProductDependencies = (
+				CC8C58EA2B09E72600BF1469 /* AudioKit */,
+				CC8C58EC2B09F00500BF1469 /* AudioKit */,
+				CC8C58EF2B0A5EB700BF1469 /* SoundpipeAudioKit */,
+			);
 			productName = Whoisspeaking;
 			productReference = CCD23EFF2B094A0000B97012 /* Whoisspeaking.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +134,10 @@
 				Base,
 			);
 			mainGroup = CCD23EF62B094A0000B97012;
+			packageReferences = (
+				CC8C58E92B09E72600BF1469 /* XCRemoteSwiftPackageReference "AudioKit" */,
+				CC8C58EE2B0A5EB700BF1469 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+			);
 			productRefGroup = CCD23F002B094A0000B97012 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,7 +165,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCD23F172B09838100B97012 /* ConnectManager.swift in Sources */,
+				CC8C58F22B0AAFFA00BF1469 /* MFCCCalculator.swift in Sources */,
+				CC8C58F42B0ABC1100BF1469 /* Buffer.swift in Sources */,
 				CCD23F072B094A0000B97012 /* ViewController.swift in Sources */,
+				CC79155D2B09E661001827D1 /* AudioFeatureExtractor.swift in Sources */,
 				CCD23F032B094A0000B97012 /* AppDelegate.swift in Sources */,
 				CCD23F052B094A0000B97012 /* SceneDelegate.swift in Sources */,
 			);
@@ -363,6 +394,42 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CC8C58E92B09E72600BF1469 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.2;
+			};
+		};
+		CC8C58EE2B0A5EB700BF1469 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CC8C58EA2B09E72600BF1469 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC8C58E92B09E72600BF1469 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+		CC8C58EC2B09F00500BF1469 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AudioKit;
+		};
+		CC8C58EF2B0A5EB700BF1469 /* SoundpipeAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC8C58EE2B0A5EB700BF1469 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
+			productName = SoundpipeAudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CCD23EF72B094A0000B97012 /* Project object */;
 }
