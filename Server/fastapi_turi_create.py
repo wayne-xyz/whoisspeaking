@@ -45,35 +45,39 @@ async def UpdateModel(dsid: int = 0):
     
     # split training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, labels, train_size = 0.7)
+    if not y_test:
+        # not enough data
+        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "data insufficient"})
+    
     
     ###### KNN
+    global KNNclf
     KNNacc = -1
     model = KNeighborsClassifier(n_neighbors=1)
-    if y_test:
-        global KNNclf
-        # fit the model to the data
-        model.fit(X_train,y_train) # training
-        lstar = model.predict(X_test)
-        KNNclf = model
-        KNNacc = sum(lstar==y_test)/float(len(y_test))
-
-        # just write this to model files directory
-        os.makedirs("models", exist_ok=True)
-        dump(model, 'models/knn_model_dsid%d.joblib'%(dsid))
+    # fit the model to the data
+    model.fit(X_train,y_train) # training
+    lstar = model.predict(X_test)
+    KNNclf = model
+    KNNacc = sum(lstar==y_test)/float(len(y_test))
+    
+    # just write this to model files directory
+    os.makedirs("models", exist_ok=True)
+    dump(model, 'models/knn_model_dsid%d.joblib'%(dsid))
         
+    
     ####### BT 
     BTacc = -1
     data = {'target':y_train, 'sequence':np.array(X_train)}
     data = tc.SFrame(data=data)
-    if y_test:
-        global BTclf
-        model = tc.classifier.boosted_trees_classifier.create(data, target='target',verbose=0)# training
-        yhat = model.predict(tc.SFrame(data={'sequence':np.array(X_test)}))
-        BTclf = model
-        BTacc = sum(yhat.to_numpy()==y_test)/float(len(y_test))
-        # save model for use later, if desired
-        os.makedirs("models", exist_ok=True)
-        model.save('models/turi_model_dsid%d'%(dsid))
+    global BTclf
+    model = tc.classifier.boosted_trees_classifier.create(data, target='target',verbose=0)# training
+    yhat = model.predict(tc.SFrame(data={'sequence':np.array(X_test)}))
+    BTclf = model
+    BTacc = sum(yhat.to_numpy()==y_test)/float(len(y_test))
+    
+    # save model for use later, if desired
+    os.makedirs("models", exist_ok=True)
+    model.save('models/turi_model_dsid%d'%(dsid))
             
     # send back the accuracies
     return json_str({"KNNAccuracy": KNNacc, "BTAccuracy": BTacc})
