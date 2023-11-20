@@ -6,6 +6,7 @@
 // creat the
 
 let SERVER_URL = "http://192.168.50.247:8000" // change this for your server name!!!
+let SERVER_URL_FAST="http://192.168.50.247:8080"  // for the faster api
 import Foundation
 class ConnectManager:NSObject, URLSessionDelegate{
     
@@ -27,7 +28,7 @@ class ConnectManager:NSObject, URLSessionDelegate{
     private let baseURL:String
     
     private override init(){
-        baseURL=SERVER_URL;
+        baseURL=SERVER_URL_FAST;
     }
     
     func sendGetRequest(endpoint: String, completion: @escaping (Result<Data, Error>) -> Void) {

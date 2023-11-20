@@ -45,7 +45,19 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     var buffer=Buffer()
     var isWaitingForData=false
     var addName:String="Default"
+    var predictionURLDefault="/PredictOne?model_name=KNN"
     
+    @IBOutlet weak var modelLabel: UILabel!
+    
+    @IBAction func modelSwitchAction(_ sender: UISwitch) {
+        if sender.isOn{
+            predictionURLDefault=POST_PREDICTKNN
+            modelLabel.text="Model:KNN"
+        }else{
+            predictionURLDefault=POST_PREDICTBT
+            modelLabel.text="Model:BT"
+        }
+    }
     
     // set the flag to start the animation of the listenning action
     var isListening=false{

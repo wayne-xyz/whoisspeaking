@@ -43,7 +43,7 @@ class AnimatedCircleView: UIView {
             // Apply the path to the layer
             ringLayer.path = ringPath.cgPath
             ringLayer.fillColor = UIColor.clear.cgColor
-            ringLayer.strokeColor = UIColor.blue.cgColor
+            ringLayer.strokeColor = UIColor.black.cgColor
             ringLayer.lineWidth = lineWidth
             layer.addSublayer(ringLayer)
 
