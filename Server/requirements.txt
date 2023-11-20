@@ -1,10 +1,6 @@
 numpy==1.23.1  
-pandas 
-matplotlib  
 scikit-learn
-seaborn 
-jupyter 
-coremltools
+tornado
 turicreate
 pymongo
 fastapi
