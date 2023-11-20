@@ -48,7 +48,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     var buffer=Buffer() //save the data
     var isWaitingForData=false //delay purpose
     var addName:String="Default"
-    var predictionURLDefault="/PredictOne?model_name=KNN"
+    var predictionURLDefault="/PredictOne"
     var dsid=0
     var predictionResult=""
     
@@ -212,7 +212,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         let connectM=ConnectManager.shared
         let jasonUpload:NSDictionary=["feature":array,"dsid":dsid]
         let requestData:Data?=self.convertDictionaryToData(with: jasonUpload)
-        connectM.sendPostRequest(endpoint: "/PredictOne", jsonData: requestData!, completion: {result in
+        connectM.sendPostRequest(endpoint: predictionURLDefault, jsonData: requestData!, completion: {result in
             switch result {
             case .success(let data):
                 // Handle the success case, e.g., parse the response data
