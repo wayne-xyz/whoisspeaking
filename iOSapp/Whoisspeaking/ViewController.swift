@@ -20,13 +20,16 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     // delegate function
     // fuction get the pitch and amp to send to server
     func audioFeatureExtract(pitch: Double, amp: Double) {
-        print("pitch\(pitch);amp\(amp)")
+       
         voiceDataHandle(pitch: pitch, amp: amp)
     }
     let RECOGNIZING_B_LABLE="Recognizing Say Something"
     let RECOGNIZE_B_DEFAULT="Start Recognize"
     let ADDRECOG_B_LABLE="Say Something"
     let ADDRECOG_B_DEFAULT="ADD Recognize"
+    
+    let POST_PREDICTKNN="/PredictOne?model_name=KNN"
+    let POST_PREDICTBT="/PredictOne?model_name=BT"
     
     @IBOutlet weak var startRecoButton: UIButton!
     
@@ -39,6 +42,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     let voiceOperationQueue=OperationQueue()
     var buffer=Buffer()
     var isWaitingForData=false
+    var addName:String="Default"
     
     
     // set the flag to start the animation of the listenning action
@@ -63,9 +67,11 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
     // handle the data from the buffer to array
     func voiceDataHandle(pitch:Double,amp:Double){
         
+        
         if(isListening){
             if(pitch>60){// filter the background
                 self.buffer.addNewData(fData: pitch, aData: amp)// add the data
+                print("addingdata\(buffer)")
             }
             // comm the server
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
@@ -74,26 +80,22 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
                     self.voiceEventOccured()   //call the func to send data to server
                 }
             })
+        }else{
+            print("unlistening no action")
         }
     }
     
     //communicat the server
     func voiceEventOccured(){
-        
         if isRecognizing{
             // send the voice data
             getPrediction(array: self.buffer.getDataAsVector())
          
         }else{
             // send the voice with label
-            // check the tesfield
-            if let label=nameText.text{
-                sendFeatures(array: self.buffer.getDataAsVector(), label: label)
-                setDelayedWaitingToTrue(2.0)
-            }else{
-                
-            }
-            
+            sendFeatures(array: self.buffer.getDataAsVector(), label: addName)
+            setDelayedWaitingToTrue(2.0)
+         
         }
     }
     
@@ -110,29 +112,52 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         if(!isListening ){
             isListening=true
             isRecognizing=true
-           
+            startRecoButton.setTitle(RECOGNIZING_B_LABLE, for: .normal)
         }else{
             isListening=false
             isRecognizing=false
+            startRecoButton.setTitle(RECOGNIZE_B_DEFAULT, for: .normal)
         }
     }
     
     //button action add the voice to server
     func addRecog(){
-        if nameText.text==nil{
-            messageInfor(_message: "Please type your name")
-        }else{
+        if let label=nameText.text{
             if(!isListening){
                 isListening=true
                 isRecognizing=false
+                addRecoButton.setTitle(ADDRECOG_B_LABLE, for: .normal)
+                addName=nameText.text ?? "Default"
             }else{
                 isListening=false
                 isRecognizing=false
+                addRecoButton.setTitle(ADDRECOG_B_DEFAULT, for: .normal)
+                getUpdateModel()// anounce the server to do the train
             }
+        }else{
+             messageInfor(_message: "Type your name")
         }
       
      
     }
+    
+    // update the model
+    func getUpdateModel(){
+        let connectM=ConnectManager.shared
+        connectM.sendGetRequest(endpoint: "/UpdateModel", completion: {result in
+            switch result {
+            case .success(let data):
+                // Handle the success case, e.g., parse the response data
+                print("Request successful. Response data: \(data)")
+                
+            case .failure(let error):
+                // Handle the failure case, e.g., display an error message
+                print("Request failed. Error: \(error)")
+            }
+            
+        })
+    }
+    
     
     // upload the feature
     func sendFeatures(array:[Double],label:String){
