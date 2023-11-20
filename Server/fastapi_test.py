@@ -13,9 +13,9 @@ names = ["Joe", "Neo", "Sam"]
 #     content = response.content.decode()
 #     print(content)
                              
-# response = requests.get(host + '/UpdateModel?dsid=0')
-# content = response.content.decode()
-# print(content)
+response = requests.get(host + '/UpdateModel?dsid=0')
+content = response.content.decode()
+print(content)
 
 feature = np.random.randn(150)
 data = {'feature': feature.tolist(), 'dsid': 0}

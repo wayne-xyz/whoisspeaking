@@ -43,6 +43,12 @@ async def UpdateModel(dsid: int = 0):
         features.append([float(val) for val in a['feature']])
         labels.append(a['label'])
     
+    if not labels:
+        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": f"no data when dsid={dsid}"})
+    
+    if len(np.unique(labels)) < 2:
+        return json_str({"KNNAccuracy": -1, "BTAccuracy": -1, "msg": "at least two classes"})
+    
     # split training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, labels, train_size = 0.7)
     if not y_test:
