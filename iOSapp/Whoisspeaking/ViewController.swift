@@ -16,13 +16,20 @@
 import UIKit
 
 
-class ViewController: UIViewController,AudioFeatureExtractorDelegate {
+class ViewController: UIViewController,AudioFeatureExtractorDelegate,UITextFieldDelegate {
     // delegate function
     // fuction get the pitch and amp to send to server
     func audioFeatureExtract(pitch: Double, amp: Double) {
        
         voiceDataHandle(pitch: pitch, amp: amp)
     }
+    
+    // Implement the UITextFieldDelegate method to handle the return key
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+         // Call resignFirstResponder to dismiss the keyboard
+         nameText.resignFirstResponder()
+         return true
+     }
     
     // several string const
     let RECOGNIZING_B_LABLE="Recognizing Say Something"
@@ -81,6 +88,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         testAudioFeaturte()
+        nameText.delegate=self
     }
 
     // detect the voice and - add recognization ,- recognize now voice
@@ -179,6 +187,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate {
             case .success(let data):
                 // Handle the success case, e.g., parse the response data
                 print("Request successful. Response data: \(data)")
+                self.messageInfor(_message: "Update the Model Successeful")
                 
             case .failure(let error):
                 // Handle the failure case, e.g., display an error message
