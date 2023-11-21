@@ -187,11 +187,18 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate,UITextField
             case .success(let data):
                 // Handle the success case, e.g., parse the response data
                 print("Request successful. Response data: \(data)")
-                self.messageInfor(_message: "Update the Model Successeful")
+                let jasonDictionary:NSDictionary=self.convertDataToDictionary(with: data)
+                let btAccuracy=jasonDictionary.value(forKey: "BTAccuracy") as! Double
+                let knnAccuracy=jasonDictionary.value(forKey: "KNNAccuracy") as! Double
+                let btac=round(1000*btAccuracy)/1000
+                let knnac=round(1000*knnAccuracy)/1000
+                
+                self.messageInfor(_message: "Update the Model Successefully,BTAccuracy:\(btac),KNNAccuracy:\(knnac)")
                 
             case .failure(let error):
                 // Handle the failure case, e.g., display an error message
                 print("Request failed. Error: \(error)")
+                self.messageInfor(_message: "\(error)")
             }
             
         })
@@ -212,6 +219,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate,UITextField
             case .failure(let error):
                 // Handle the failure case, e.g., display an error message
                 print("Request failed. Error: \(error)")
+                self.messageInfor(_message: "\(error)")
             }
         })
     }
@@ -239,6 +247,7 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate,UITextField
             case .failure(let error):
                 // Handle the failure case, e.g., display an error message
                 print("Request failed. Error: \(error)")
+                self.messageInfor(_message: "\(error)")
             }
             
         })
@@ -261,6 +270,13 @@ class ViewController: UIViewController,AudioFeatureExtractorDelegate,UITextField
     // a func to tell user by a dialog
     func messageInfor(_message:String){
         print("Message:\(_message)")
+        let alertController = UIAlertController(title: "Info", message: _message, preferredStyle: .alert)
+              alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+              
+              // Present the alert on the main thread
+        DispatchQueue.main.async(execute: {
+            self.present(alertController, animated: true, completion: nil)
+        })
     }
     
     //MARK: JSON Conversion Functions
